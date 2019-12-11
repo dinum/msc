@@ -35,7 +35,8 @@ $config['base_url'] = '';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['base_url'] = 'http://localhost/msc/';
+$config['doc_root'] = 'C:/wamp/www/msc/';
 
 /*
 |--------------------------------------------------------------------------
