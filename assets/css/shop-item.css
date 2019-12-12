@@ -17,9 +17,19 @@ body {
 .flex-column .nav-item{
     background-color: #e7e7e7;
     margin: 2px 0;
-    color: #000080;
 }
 
 .flex-column .nav-link .pl-2 .nav-item{
    
+}
+
+.mainbody{
+    min-height: 780px;
+}
+
+.loginbody{
+    margin: 10px auto 0 auto;
+    width: 400px;
+    background-color: #f3f3f3;
+    border: 1px solid #dddddd;
 }

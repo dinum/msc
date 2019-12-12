@@ -3,7 +3,7 @@
       <div class="col-lg-3">
           <h1 class="my-4 text-center"><img src="<?php echo base_url(); ?>assets/image/symbole.png" class="img-fluid"/></h1>
         
-        <ul class="nav flex-column flex-nowrap overflow-hidden">
+        <!--<ul class="nav flex-column flex-nowrap overflow-hidden">
                 <li class="nav-item">
                     <a class="nav-link text-truncate" href="#"><i class="fa fa-home"></i> <span class="d-none d-sm-inline">Overview</span></a>
                 </li>
@@ -40,8 +40,12 @@
                 </li>
                 <li class="nav-item"><a class="nav-link text-truncate" href="#"><i class="fa fa-bar-chart"></i> <span class="d-none d-sm-inline">Analytics</span></a></li>
                 <li class="nav-item"><a class="nav-link text-truncate" href="#"><i class="fa fa-download"></i> <span class="d-none d-sm-inline">Export</span></a></li>
-            </ul>
-        
+            </ul>-->
+        <ul class="nav flex-column flex-nowrap overflow-hidden">
+            <li class="nav-item">
+                <a class="nav-link text-truncate" href="#"><span class="d-none d-sm-inline">Results</span></a>
+            </li>
+        </ul>
       </div>
       <!-- /.col-lg-3 -->
 
