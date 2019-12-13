@@ -57,3 +57,4 @@ $route['login/(:num)'] = 'Login/index/$1';
 $route['permissions/(:num)'] = 'Permissions/index/$1';
 $route['roles/(:num)'] = 'Roles/index/$1';
 $route['users/(:num)'] = 'Users/index/$1';
+$route['elections/(:num)'] = 'Elections/index/$1';

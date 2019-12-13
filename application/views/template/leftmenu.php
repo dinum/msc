@@ -43,18 +43,11 @@
             </ul>-->
         <ul class="nav flex-column flex-nowrap overflow-hidden">            
             <li class="nav-item">
-                <a class="nav-link text-truncate" href="<?php echo base_url(); ?>elections"><span class="d-none d-sm-inline">Elections</span></a>
+                <a class="nav-link text-truncate" href="<?php echo base_url(); ?>elections"><span><i class="fa fa-bars"></i>&nbsp;&nbsp;Elections</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed text-truncate" href="#submenu1" data-toggle="collapse" data-target="#submenu1"><span class="d-none d-sm-inline">User Management</span></a>
-                <div class="collapse" id="submenu1" aria-expanded="false">
-                        <ul class="flex-column pl-2 nav">
-                            <li class="nav-item"><a class="nav-link py-0" href="<?php echo base_url(); ?>users"><span>Users</span></a></li>
-                            <li class="nav-item"><a class="nav-link py-0" href="<?php echo base_url(); ?>roles"><span>Roles</span></a></li>
-                            <li class="nav-item"><a class="nav-link py-0" href="<?php echo base_url(); ?>permissions"><span>Permissions</span></a></li>
-                        </ul>
-                </div>    
-            </li>
+            <li class="nav-item"><a class="nav-link text-truncate" href="<?php echo base_url(); ?>users"><span><i class="fa fa-user"></i>&nbsp;&nbsp;Users</span></a></li>
+            <li class="nav-item"><a class="nav-link text-truncate" href="<?php echo base_url(); ?>roles"><span><i class="fa fa-level-up"></i>&nbsp;&nbsp;Roles</span></a></li>
+            <li class="nav-item"><a class="nav-link text-truncate" href="<?php echo base_url(); ?>permissions"><span><i class="fa fa-lock"></i>&nbsp;&nbsp;Permissions</span></a></li>
         </ul>
       </div>
       <!-- /.col-lg-3 -->
