@@ -67,6 +67,23 @@ class Common {
         $CI->Tbllog->insert_data($data);
     }
     
+    function enter_log_logedUser($user,$log,$values,$id){
+        
+        $CI =& get_instance();
+        $CI->load->model('Tbllog'); 
+        
+        $data = array(
+            'log_date' => date("Y/m/d"),
+            'log_time' => date('H:i:s'),
+            'user_name' => $user,
+            'user_id' => $id,
+            'description' => $log,
+            'values' => (is_array($values))?json_encode(array_values($values)):$values,
+            'ip_add' => $this->get_client_ip()
+        );
+        $CI->Tbllog->insert_data($data);
+    }
+    
     function get_client_ip() {
         $ipaddress = '';
         if (getenv('HTTP_CLIENT_IP'))

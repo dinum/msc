@@ -7,6 +7,7 @@ class Login extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Tblusers');
+        $this->load->model('TblgetData');
         $this->load->library('messages');
         $this->load->library('common');
     }
@@ -47,12 +48,28 @@ class Login extends CI_Controller {
                 $userData = $this->Tblusers->get_by_filter($userFilters);
                 if (isset($userData[0]) && $userData[0]->id != '') {
                     if($userData[0]->password == md5($psword)){
+                                                
+                        $permissions_list = $this->TblgetData->getPermissionsByUser($userData[0]->id);
+                                                
                          $sessionArray = array(
                             'user_logged' => true,
                             'user_name' => $userData[0]->name,
                             'user_id' => $userData[0]->id,
                             'user_email' => $userData[0]->email
                         );
+                         
+                        $low_permission = array();
+                        $all_permissions =array();
+                        foreach ($permissions_list as $permission) {
+                            if($permission->special_permission==0){
+                                array_push($low_permission,$permission->permission);
+                            }
+                            array_push($all_permissions,$permission->permission);                            
+                        }
+                        
+                        $sessionArray['permissions'] = $all_permissions;
+                        $sessionArray['low_permissions'] = $low_permission;
+                         
                         $this->session->set_userdata($sessionArray);
                         $logString = "User Login -  / USER - " . $userData[0]->username . " ID - " . $userData[0]->id . " / Date " . date("Y-m-d H:i:s");
                         $this->common->enter_log($userData[0]->username,$logString,array());

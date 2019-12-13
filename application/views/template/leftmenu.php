@@ -41,9 +41,19 @@
                 <li class="nav-item"><a class="nav-link text-truncate" href="#"><i class="fa fa-bar-chart"></i> <span class="d-none d-sm-inline">Analytics</span></a></li>
                 <li class="nav-item"><a class="nav-link text-truncate" href="#"><i class="fa fa-download"></i> <span class="d-none d-sm-inline">Export</span></a></li>
             </ul>-->
-        <ul class="nav flex-column flex-nowrap overflow-hidden">
+        <ul class="nav flex-column flex-nowrap overflow-hidden">            
             <li class="nav-item">
-                <a class="nav-link text-truncate" href="#"><span class="d-none d-sm-inline">Results</span></a>
+                <a class="nav-link text-truncate" href="<?php echo base_url(); ?>elections"><span class="d-none d-sm-inline">Elections</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed text-truncate" href="#submenu1" data-toggle="collapse" data-target="#submenu1"><span class="d-none d-sm-inline">User Management</span></a>
+                <div class="collapse" id="submenu1" aria-expanded="false">
+                        <ul class="flex-column pl-2 nav">
+                            <li class="nav-item"><a class="nav-link py-0" href="<?php echo base_url(); ?>users"><span>Users</span></a></li>
+                            <li class="nav-item"><a class="nav-link py-0" href="<?php echo base_url(); ?>roles"><span>Roles</span></a></li>
+                            <li class="nav-item"><a class="nav-link py-0" href="<?php echo base_url(); ?>permissions"><span>Permissions</span></a></li>
+                        </ul>
+                </div>    
             </li>
         </ul>
       </div>
