@@ -4,10 +4,16 @@
  * Login Controller
  */
 class Roles extends CI_Controller {
+    public $permissions;
     public function __construct() {
         parent::__construct();
         if (!$this->session->userdata('user_logged')) {
             redirect(base_url().'login/11');
+        }
+        if($this->session->userdata('user_logged')){
+            $this->permissions = $this->session->userdata('permissions');
+        } else {
+            $this->permissions = array('home');
         }
         $this->load->model('TblRoles');
         $this->load->model('TblPermission');
@@ -91,7 +97,7 @@ class Roles extends CI_Controller {
     
     public function loadHeader(){
         $this->load->view('template/header');
-        $this->load->view('template/leftmenu');
+        $this->load->view('template/leftmenu',array('permissions'=>$this->permissions));
     }
       
     public function loadFooter(){

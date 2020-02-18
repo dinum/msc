@@ -58,3 +58,5 @@ $route['permissions/(:num)'] = 'Permissions/index/$1';
 $route['roles/(:num)'] = 'Roles/index/$1';
 $route['users/(:num)'] = 'Users/index/$1';
 $route['elections/(:num)'] = 'Elections/index/$1';
+$route['404'] = 'Home/not_found';
+$route['permission_denied'] = 'Home/permission_denied';

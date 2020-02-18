@@ -55,39 +55,40 @@ class Login extends CI_Controller {
                             'user_logged' => true,
                             'user_name' => $userData[0]->name,
                             'user_id' => $userData[0]->id,
-                            'user_email' => $userData[0]->email
+                            'user_email' => $userData[0]->email,
+                            'special_per' => true
                         );
                          
-                        $low_permission = array();
-                        $all_permissions =array();
+                        $high_permission = array('home');
+                        $all_permissions =array('home');
                         foreach ($permissions_list as $permission) {
-                            if($permission->special_permission==0){
-                                array_push($low_permission,$permission->permission);
+                            if($permission->special_permission==1){
+                                array_push($high_permission,$permission->permission);
                             }
                             array_push($all_permissions,$permission->permission);                            
                         }
                         
                         $sessionArray['permissions'] = $all_permissions;
-                        $sessionArray['low_permissions'] = $low_permission;
+                        $sessionArray['high_permissions'] = $high_permission;
                          
                         $this->session->set_userdata($sessionArray);
                         $logString = "User Login -  / USER - " . $userData[0]->username . " ID - " . $userData[0]->id . " / Date " . date("Y-m-d H:i:s");
-                        $this->common->enter_log($userData[0]->username,$logString,array());
+                        $this->common->custlog($userData[0]->username,$logString,$userData[0]->id);
                         redirect(base_url());
                     } else {                        
                         $logString = "Login Failed | Incorrect Password | User Name=".$uname;
-                        $this->common->enter_log($userData[0]->username,$logString,array());
+                        $this->common->custlog($userData[0]->username,$logString,$userData[0]->id);
                         redirect(base_url().'login/10');
                     }                       
                 } else {
                     $logString = "Login Failed | No Record In Database | User Name=".$uname;
-                    $this->common->enter_log('',$logString,array());
+                    $this->common->custlog('',$logString,0);
                     redirect(base_url().'login/10');
                 }        
                 
             } else {
                 $logString = "Login Failed | Empty Username OR Password | User Name=".$uname;
-                $this->common->enter_log('',$logString,array());
+                $this->common->custlog('',$logString,0);
                 redirect(base_url().'login/10');
             }
         }
@@ -98,11 +99,14 @@ class Login extends CI_Controller {
             redirect(base_url());
         }
         $logString = "User LogOut -  / USER - " . $this->session->userdata('user_name') . " ID - " . $this->session->userdata('user_id') . " / Date " . date("Y-m-d H:i:s");
-        $this->common->enter_log($this->session->userdata('user_name'),$logString,array());
+        $this->common->custlog($this->session->userdata('user_name'),$logString,$this->session->userdata('user_id'));
         $this->session->unset_userdata('user_logged');
         $this->session->unset_userdata('user_name');
         $this->session->unset_userdata('user_id');
         $this->session->unset_userdata('user_email');
+        $this->session->unset_userdata('special_per');
+        $this->session->unset_userdata('permissions');
+        $this->session->unset_userdata('high_permissions');
         redirect(base_url());
     }
     

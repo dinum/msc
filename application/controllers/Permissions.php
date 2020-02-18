@@ -4,10 +4,25 @@
  * Login Controller
  */
 class Permissions extends CI_Controller {
+    public $permissions;
+    private $super_permissions;
+    
     public function __construct(){
         parent::__construct();
         if (!$this->session->userdata('user_logged')) {
             redirect(base_url().'login/11');
+        }
+        if($this->session->userdata('user_logged')){
+            $this->permissions = $this->session->userdata('permissions');
+            $this->super_permissions = $this->session->userdata('high_permissions');
+        } else {
+            $this->permissions = array('home');
+        }
+        if($this->session->userdata('special_per')){            
+            $active_group = "";
+            $this->db->reconnect();
+        } else {
+            $this->current_db  = $this->load->database('read_only');
         }
         $this->load->model('TblPermission');
         $this->load->library('messages');
@@ -20,7 +35,7 @@ class Permissions extends CI_Controller {
     		$msg = $this->messages->returnMessage($msgid);
     	} else {
     		$msg = "";
-    	}
+    	}        
         $datas = $this->TblPermission->get_all();
         $this->loadHeader();
         $this->load->view('internal/permissions',array('datas'=>$datas,'msg'=>$msg));
@@ -34,6 +49,12 @@ class Permissions extends CI_Controller {
     	} else {
     		$msg = "";
     	}
+        
+        if (array_search('add_permissions', $this->permissions)) {
+            
+        } else {
+            
+        }
         
         if(isset($_POST['submitform'])){
             $name = $this->common->clean_text($this->input->post('name'));
@@ -77,7 +98,7 @@ class Permissions extends CI_Controller {
     
     public function loadHeader(){
         $this->load->view('template/header');
-        $this->load->view('template/leftmenu');
+        $this->load->view('template/leftmenu',array('permissions'=>$this->permissions));
     }
       
     public function loadFooter(){

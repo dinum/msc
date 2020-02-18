@@ -45,9 +45,17 @@
             <li class="nav-item">
                 <a class="nav-link text-truncate" href="<?php echo base_url(); ?>elections"><span><i class="fa fa-bars"></i>&nbsp;&nbsp;Elections</span></a>
             </li>
-            <li class="nav-item"><a class="nav-link text-truncate" href="<?php echo base_url(); ?>users"><span><i class="fa fa-user"></i>&nbsp;&nbsp;Users</span></a></li>
-            <li class="nav-item"><a class="nav-link text-truncate" href="<?php echo base_url(); ?>roles"><span><i class="fa fa-level-up"></i>&nbsp;&nbsp;Roles</span></a></li>
-            <li class="nav-item"><a class="nav-link text-truncate" href="<?php echo base_url(); ?>permissions"><span><i class="fa fa-lock"></i>&nbsp;&nbsp;Permissions</span></a></li>
+            <?php if ($this->session->userdata('user_logged')) { ?>
+                <?php if (array_search('add_users', $permissions) || array_search('view_users', $permissions) || array_search('update_users', $permissions)) { ?>
+                    <li class="nav-item"><a class="nav-link text-truncate" href="<?php echo base_url(); ?>users"><span><i class="fa fa-user"></i>&nbsp;&nbsp;Users</span></a></li>
+                <?php } ?>    
+                <?php if (array_search('add_roles', $permissions) || array_search('view_roles', $permissions) || array_search('update_roles', $permissions)) { ?>
+                     <li class="nav-item"><a class="nav-link text-truncate" href="<?php echo base_url(); ?>roles"><span><i class="fa fa-level-up"></i>&nbsp;&nbsp;Roles</span></a></li>
+                <?php } ?>
+                <?php if (array_search('add_permissions', $permissions) || array_search('view_permissions', $permissions) || array_search('update_permissions', $permissions)) { ?>     
+                     <li class="nav-item"><a class="nav-link text-truncate" href="<?php echo base_url(); ?>permissions"><span><i class="fa fa-lock"></i>&nbsp;&nbsp;Permissions</span></a></li>
+                <?php } ?>     
+            <?php } ?>
         </ul>
       </div>
       <!-- /.col-lg-3 -->

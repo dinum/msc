@@ -17,7 +17,9 @@
             <div id="collapseOne" class="collapse <?php echo ($i == 1) ? "show" : ""; ?>" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item text-center"><a href="<?php echo base_url(); ?>elections/add/<?php echo $election->id; ?>" class="btn btn-info btn-small"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a></li>
+                        <?php if (array_search('add_election', $permissions)) { ?>
+                            <li class="list-group-item text-center"><a href="<?php echo base_url(); ?>elections/add/<?php echo $election->id; ?>" class="btn btn-info btn-small"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a></li>
+                        <?php } ?>
                         <li class="list-group-item">2019</li>
                         <li class="list-group-item">2018</li>
                         <li class="list-group-item">2017</li>

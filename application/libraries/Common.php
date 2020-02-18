@@ -84,6 +84,17 @@ class Common {
         $CI->Tbllog->insert_data($data);
     }
     
+    function custlog($user,$log,$id){
+        $this->CI =& get_instance();
+        $this->CI->load->helper('file');
+        $base = $this->CI->config->item('doc_root');        
+        $filename = $base.'logs/activity_cust_log_'.date('Y_m_d').'.log';
+        
+        $entry = date('Y-m-d H:i:s')." - ".$user." - ".$id." - ".$log." - ".$this->get_client_ip()."\n";
+        
+        write_file($filename, $entry,'a');                
+     }
+    
     function get_client_ip() {
         $ipaddress = '';
         if (getenv('HTTP_CLIENT_IP'))
