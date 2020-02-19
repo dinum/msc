@@ -39,6 +39,10 @@ class Login extends CI_Controller {
                 $this->session->unset_userdata('user_name');
                 $this->session->unset_userdata('user_id');
                 $this->session->unset_userdata('user_email');
+                $this->session->unset_userdata('special_per');
+                $this->session->unset_userdata('verify_user');
+                $this->session->unset_userdata('permissions');
+                $this->session->unset_userdata('high_permissions');
                 
                 $userFilters = array(
                     'username' => $uname,
@@ -56,7 +60,8 @@ class Login extends CI_Controller {
                             'user_name' => $userData[0]->name,
                             'user_id' => $userData[0]->id,
                             'user_email' => $userData[0]->email,
-                            'special_per' => true
+                            'special_per' => false,
+                            'verify_user' => false
                         );
                          
                         $high_permission = array('home');
@@ -105,6 +110,7 @@ class Login extends CI_Controller {
         $this->session->unset_userdata('user_id');
         $this->session->unset_userdata('user_email');
         $this->session->unset_userdata('special_per');
+        $this->session->unset_userdata('verify_user');
         $this->session->unset_userdata('permissions');
         $this->session->unset_userdata('high_permissions');
         redirect(base_url());

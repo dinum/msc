@@ -60,3 +60,4 @@ $route['users/(:num)'] = 'Users/index/$1';
 $route['elections/(:num)'] = 'Elections/index/$1';
 $route['404'] = 'Home/not_found';
 $route['permission_denied'] = 'Home/permission_denied';
+$route['verify_user/(:any)'] = 'Home/verify_user/$1';

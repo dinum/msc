@@ -8,6 +8,15 @@ class TblgetData extends CI_Model {
         parent::__construct();
     }
     
+    public function change_DB(){
+        $this->db->close();
+        if($this->session->userdata('special_per')){
+            $this->load->database('read_write');
+        } else {
+            $this->load->database('read_only');
+        }
+    }  
+    
     function getPermissionsByUser($id) {
         $this->db->select("tblpermission.permission,tblpermission.special_permission");
         $this->db->from("user_roles");

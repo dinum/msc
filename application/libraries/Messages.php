@@ -71,6 +71,9 @@ class Messages {
             case 19:
                 return "<div class='alert alert-danger validator' role='alert'>Invalid Category</div>";
                 break;
+            case 20:
+                return "<div class='alert alert-danger validator' role='alert'>Invalid Password</div>";
+                break;
             default:
                 return "<div class='alert alert-warning' role='alert'>Unknown Error, Please Contact Administrator</div>";
                 break;

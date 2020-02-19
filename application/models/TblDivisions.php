@@ -13,6 +13,16 @@ class TblDivisions extends CI_Model {
         $this->table = "table_divisions";
         $this->key_id = "id";
     }
+    
+    public function change_DB(){
+        $this->db->close();
+        if($this->session->userdata('special_per')){
+            $this->load->database('read_write');
+        } else {
+            $this->load->database('read_only');
+        }
+    }  
+    
     public function get_all() {
         $query = $this->db->get($this->table);
         return $query->result();

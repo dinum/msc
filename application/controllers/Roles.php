@@ -5,6 +5,7 @@
  */
 class Roles extends CI_Controller {
     public $permissions;
+    public $super_permissions;
     public function __construct() {
         parent::__construct();
         if (!$this->session->userdata('user_logged')) {
@@ -12,6 +13,7 @@ class Roles extends CI_Controller {
         }
         if($this->session->userdata('user_logged')){
             $this->permissions = $this->session->userdata('permissions');
+            $this->super_permissions = $this->session->userdata('high_permissions');
         } else {
             $this->permissions = array('home');
         }
@@ -35,6 +37,26 @@ class Roles extends CI_Controller {
         $this->loadFooter();
     }
     
+    public function permission_check($permission,$rul){
+        if (array_search($permission, $this->permissions)) {
+            if(array_search($permission, $this->super_permissions)&&!$this->session->userdata('special_per')&&!$this->session->userdata('verify_user')){
+                redirect(base_url().'verify_user'."/". base64_encode($rul));
+            } else if(array_search($permission, $this->super_permissions)&&$this->session->userdata('verify_user')) {
+                $this->session->set_userdata('special_per', true);
+                $this->TblRoles->change_DB();
+                $this->TblPermissionRoles->change_DB();
+            }
+        } else {
+            redirect(base_url().'permission_denied');
+        }
+    }
+
+    public function close_permissions(){
+        $this->session->set_userdata('special_per', false);
+        $this->TblRoles->change_DB();
+        $this->TblPermissionRoles->change_DB();
+    }
+    
     public function add($msgid=""){
         $errors = array();
         if(isset($msgid)&&$msgid != ""){
@@ -42,6 +64,9 @@ class Roles extends CI_Controller {
     	} else {
     		$msg = "";
     	}
+        
+        $this->permission_check('add_roles',base_url()."roles/add");
+        
         $permissions = $this->TblPermission->get_all();
         if(isset($_POST['submitform'])){
             $name = $this->common->clean_text($this->input->post('name'));
@@ -89,7 +114,7 @@ class Roles extends CI_Controller {
                 
             } 
         }
-        
+        $this->close_permissions();
         $this->loadHeader();
         $this->load->view('internal/add_role',array('msg'=>$msg,'error'=>$errors,'permissions'=>$permissions));
         $this->loadFooter();

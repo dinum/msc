@@ -18,12 +18,7 @@ class Permissions extends CI_Controller {
         } else {
             $this->permissions = array('home');
         }
-        if($this->session->userdata('special_per')){            
-            $active_group = "";
-            $this->db->reconnect();
-        } else {
-            $this->current_db  = $this->load->database('read_only');
-        }
+                
         $this->load->model('TblPermission');
         $this->load->library('messages');
         $this->load->library('common');
@@ -35,13 +30,33 @@ class Permissions extends CI_Controller {
     		$msg = $this->messages->returnMessage($msgid);
     	} else {
     		$msg = "";
-    	}        
+    	}    
+            $this->TblPermission->change_DB();
+        
         $datas = $this->TblPermission->get_all();
         $this->loadHeader();
         $this->load->view('internal/permissions',array('datas'=>$datas,'msg'=>$msg));
         $this->loadFooter();
     }
     
+    public function permission_check($permission,$rul){
+        if (array_search($permission, $this->permissions)) {
+            if(array_search($permission, $this->super_permissions)&&!$this->session->userdata('special_per')&&!$this->session->userdata('verify_user')){
+                redirect(base_url().'verify_user'."/". base64_encode($rul));
+            } else if(array_search($permission, $this->super_permissions)&&$this->session->userdata('verify_user')) {
+                $this->session->set_userdata('special_per', true);
+                $this->TblPermission->change_DB();
+            }
+        } else {
+            redirect(base_url().'permission_denied');
+        }
+    }
+
+    public function close_permissions(){
+        $this->session->set_userdata('special_per', false);
+        $this->TblPermission->change_DB();
+    }
+
     public function add($msgid=""){
         $errors = array();
         if(isset($msgid)&&$msgid != ""){
@@ -50,11 +65,7 @@ class Permissions extends CI_Controller {
     		$msg = "";
     	}
         
-        if (array_search('add_permissions', $this->permissions)) {
-            
-        } else {
-            
-        }
+        $this->permission_check('add_permissions',base_url()."permissions/add");
         
         if(isset($_POST['submitform'])){
             $name = $this->common->clean_text($this->input->post('name'));
@@ -88,7 +99,7 @@ class Permissions extends CI_Controller {
                 $this->common->enter_log_logedUser($this->session->userdata('user_name'),$logString,$_POST,$this->session->userdata('user_id'));
             }
         }
-        
+        $this->close_permissions();
         $this->loadHeader();
         $this->load->view('internal/add_permissions',array('msg'=>$msg,'error'=>$errors));
         $this->loadFooter();

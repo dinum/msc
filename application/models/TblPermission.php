@@ -8,6 +8,16 @@ class TblPermission extends CI_Model {
     //put your code here
     private $table;
     private $key_id;
+    
+    public function change_DB(){
+        $this->db->close();
+        if($this->session->userdata('special_per')){
+            $this->load->database('read_write');
+        } else {
+            $this->load->database('read_only');
+        }
+    }    
+    
     public function __construct() {
         parent::__construct();
         $this->table = "tblpermission";
